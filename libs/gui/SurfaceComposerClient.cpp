@@ -630,6 +630,35 @@ status_t SurfaceComposerClient::getDisplayInfo(
     return getDisplayInfo(getBuiltInDisplay(displayId), info);
 }
 
+ssize_t SurfaceComposerClient::getDisplayWidth(int32_t dpy)
+{
+    DisplayInfo info;
+    getDisplayInfo(getBuiltInDisplay(dpy), &info);
+    ssize_t displayWidth = info.w;
+    return displayWidth;
+}
+
+ssize_t SurfaceComposerClient::getDisplayHeight(int32_t dpy)
+{
+    DisplayInfo info;
+    getDisplayInfo(getBuiltInDisplay(dpy), &info);
+    ssize_t displayHeight = info.h;
+    return displayHeight;
+}
+
+ssize_t SurfaceComposerClient::getDisplayOrientation(int32_t  dpy)
+{
+    DisplayInfo info;
+    getDisplayInfo(getBuiltInDisplay(dpy), &info);
+    ssize_t orientation = info.orientation;
+    return orientation;
+}
+
+ssize_t SurfaceComposerClient::getNumberOfDisplays()
+{
+    return 1;
+}
+
 // ----------------------------------------------------------------------------
 
 ScreenshotClient::ScreenshotClient()
