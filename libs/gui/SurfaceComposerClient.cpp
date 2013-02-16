@@ -630,34 +630,25 @@ status_t SurfaceComposerClient::getDisplayInfo(
     return getDisplayInfo(getBuiltInDisplay(displayId), info);
 }
 
-ssize_t SurfaceComposerClient::getDisplayWidth(int32_t dpy)
-{
+#if defined(ICS_CAMERA_BLOB) || defined(MR0_CAMERA_BLOB)
+ssize_t SurfaceComposerClient::getDisplayWidth(int32_t displayId) {
     DisplayInfo info;
-    getDisplayInfo(getBuiltInDisplay(dpy), &info);
-    ssize_t displayWidth = info.w;
-    return displayWidth;
+    getDisplayInfo(getBuiltInDisplay(displayId), &info);
+    return info.w;
 }
 
-ssize_t SurfaceComposerClient::getDisplayHeight(int32_t dpy)
-{
+ssize_t SurfaceComposerClient::getDisplayHeight(int32_t displayId) {
     DisplayInfo info;
-    getDisplayInfo(getBuiltInDisplay(dpy), &info);
-    ssize_t displayHeight = info.h;
-    return displayHeight;
+    getDisplayInfo(getBuiltInDisplay(displayId), &info);
+    return info.h;
 }
 
-ssize_t SurfaceComposerClient::getDisplayOrientation(int32_t  dpy)
-{
+ssize_t SurfaceComposerClient::getDisplayOrientation(int32_t displayId) {
     DisplayInfo info;
-    getDisplayInfo(getBuiltInDisplay(dpy), &info);
-    ssize_t orientation = info.orientation;
-    return orientation;
+    getDisplayInfo(getBuiltInDisplay(displayId), &info);
+    return info.orientation;
 }
-
-ssize_t SurfaceComposerClient::getNumberOfDisplays()
-{
-    return 1;
-}
+#endif
 
 // ----------------------------------------------------------------------------
 
