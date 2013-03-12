@@ -47,6 +47,9 @@ ifeq ($(BOARD_ADRENO_DECIDE_TEXTURE_TARGET),true)
     LOCAL_CFLAGS += -DDECIDE_TEXTURE_TARGET
 endif
 
+# HWComposer.cpp contains 2 pretty bad aliasing violations
+LOCAL_CFLAGS += -fno-strict-aliasing
+
 LOCAL_SHARED_LIBRARIES := \
 	libcutils \
 	libdl \
