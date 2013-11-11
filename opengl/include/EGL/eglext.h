@@ -513,6 +513,17 @@ EGLAPI void EGLAPIENTRY eglSetBlobCacheFuncsANDROID(EGLDisplay dpy, EGLSetBlobFu
 typedef void (EGLAPIENTRYP PFNEGLSETBLOBCACHEFUNCSANDROIDPROC)(EGLDisplay dpy, EGLSetBlobFuncANDROID set, EGLGetBlobFuncANDROID get);
 #endif
 
+#if defined(LS_NATIVE)
+/* EGL_ANDROID_get_render_buffer
+ */
+#ifndef EGL_ANDROID_get_render_buffer
+#define EGL_ANDROID_get_render_buffer 1
+#ifdef EGL_EGLEXT_PROTOTYPES
+EGLAPI EGLClientBuffer EGLAPIENTRY eglGetRenderBufferANDROID(EGLDisplay dpy, EGLSurface draw);
+#endif
+#endif
+#endif
+
 #ifndef EGL_ANDROID_image_native_buffer
 #define EGL_ANDROID_image_native_buffer 1
 #define EGL_NATIVE_BUFFER_ANDROID		0x3140
