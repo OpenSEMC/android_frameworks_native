@@ -49,6 +49,10 @@
 
 using namespace android;
 
+#if defined(LS_NATIVE)
+EGLClientBuffer eglGetRenderBufferANDROID(EGLDisplay dpy, EGLSurface draw);
+#endif
+
 // ----------------------------------------------------------------------------
 
 namespace android {
@@ -112,6 +116,12 @@ static const extention_map_t sExtensionMap[] = {
             (__eglMustCastToProperFunctionPointerType)&eglCreateImageKHR },
     { "eglDestroyImageKHR",
             (__eglMustCastToProperFunctionPointerType)&eglDestroyImageKHR },
+
+#if defined(LS_NATIVE)
+    // EGL_GET_RENDER_BUFFER
+    { "eglGetRenderBufferANDROID",
+        (__eglMustCastToProperFunctionPointerType)&eglGetRenderBufferANDROID },
+#endif
 
     // EGL_KHR_reusable_sync, EGL_KHR_fence_sync
     { "eglCreateSyncKHR",
@@ -1408,6 +1418,24 @@ EGLint eglWaitSyncKHR(EGLDisplay dpy, EGLSyncKHR sync, EGLint flags) {
 // ----------------------------------------------------------------------------
 // ANDROID extensions
 // ----------------------------------------------------------------------------
+
+#if defined(LS_NATIVE)
+EGLClientBuffer eglGetRenderBufferANDROID(EGLDisplay dpy, EGLSurface draw)
+{
+    clearError();
+
+    const egl_display_ptr dp = validate_display(dpy);
+    if (!dp) return EGL_FALSE;
+
+    egl_surface_t const * const s = get_surface(draw);
+
+    egl_connection_t* const cnx = &gEGLImpl;
+    if (cnx->dso && cnx->egl.eglGetRenderBufferANDROID) {
+        return cnx->egl.eglGetRenderBufferANDROID(dp->disp.dpy, s->surface);
+    }
+    return setError(EGL_BAD_DISPLAY, (EGLClientBuffer*)0);
+}
+#endif
 
 EGLint eglDupNativeFenceFDANDROID(EGLDisplay dpy, EGLSyncKHR sync)
 {
