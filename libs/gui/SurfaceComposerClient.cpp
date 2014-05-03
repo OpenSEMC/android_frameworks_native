@@ -815,9 +815,15 @@ PixelFormat ScreenshotClient::getFormat() const {
     return mBuffer.format;
 }
 
+#ifdef SCREENSHOT_CLIENT_STRIDE_HACK
+uint32_t ScreenshotClient::getStride() const {
+    return mBuffer.width;
+}
+#else
 uint32_t ScreenshotClient::getStride() const {
     return mBuffer.stride;
 }
+#endif
 
 size_t ScreenshotClient::getSize() const {
     return mBuffer.stride * mBuffer.height * bytesPerPixel(mBuffer.format);
