@@ -495,6 +495,23 @@ private:
     bool mBootFinished;
     bool mUseDithering;
 
+    // Set if the Gpu Tile render DR optimization enabled
+    bool mGpuTileRenderEnable;
+    bool mCanUseGpuTileRender;
+    Rect mUnionDirtyRect;
+
+#ifdef QCOM_BSP
+    // Set up the DirtyRect/flags for GPU Comp optimization if required.
+    void setUpTiledDr();
+    // Find out if GPU composition can use Dirtyregion optimization
+    // Get the union dirty rect to operate
+    bool computeTiledDr(const sp<const DisplayDevice>& hw);
+    enum {
+       GL_PRESERVE_NONE = 0,
+       GL_PRESERVE      = 1
+    };
+#endif
+
     // these are thread safe
     mutable MessageQueue mEventQueue;
     FrameTracker mAnimFrameTracker;
